@@ -22,6 +22,17 @@ Master is other node in which kubernetes is installed and it manages other nodes
 - Container Runtime
 - Controller
 - Scheduler
+Control Plane Components
+These components manage the cluster's overall state and operations, ensuring the current state matches the desired state. 
+API Server (kube-apiserver): This is the central management entity and the front end of the Kubernetes control plane. It exposes the Kubernetes API and is responsible for processing, authenticating, and validating all API requests. It serves as the hub for all communication between other components.
+etcd: A consistent and highly-available key-value store used as the backing store for all cluster data. It stores the entire configuration and state of the cluster, and all other components interact with it via the API Server.
+Scheduler (kube-scheduler): This component watches for newly created Pods that have no node assigned and selects an appropriate node for them to run on. It considers resource requirements, hardware/software/policy constraints, and other factors to make the optimal placement decision.
+Controller Manager (kube-controller-manager): This runs various controller processes in the background, which are responsible for maintaining the desired state of the cluster.
+Examples include the Node Controller (notices and responds when nodes go down), the Job Controller (watches for Jobs that represent a one-off task), and the Replication Controller (ensures the desired number of Pod replicas are running).
+Worker Node Components
+These components run on each individual node (worker machine) and provide the execution environment for your containerized applications. 
+Kubelet: An agent that runs on every node in the cluster. It ensures that containers are running in a Pod as expected. The Kubelet takes the Pod specifications provided by the API server and manages the container lifecycle, interacting with the container runtime to start or stop containers.
+Container Runtime: The underlying software that is responsible for running containers. Kubernetes supports several runtimes through the Container Runtime Interface (CRI), such as containerd, CRI-O, and Docker. This component pulls images and runs the actual application containers. 
 
 ### Master V/S Worker node
 Master has kube-apiserver installed and nodes have kubelet installed (Kubelet is an agent which make sure nodes are healthy) which provides information to master which stores information in etcd (key value storage)
